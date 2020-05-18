@@ -1,14 +1,12 @@
 ---
-title: "SLE712 assessment part 1"
+title: "SLE712 assessment part 1 and part 2"
 author: "Kinhgsley Isaac Ogamanya"
 date: "18/05/2020"
 output: html_document
 theme: cosmo
 ---
 
-##Question1: 
-Read in the file, making the gene accession numbers the row names. 
-Show a table of values for the first six genes.
+##Question1: Read in the file, making the gene accession numbers the row names. Show a table of values for the first six genes.
 ```{r,download}
 download.file("https://raw.githubusercontent.com/markziemann/SLE712_files/master/bioinfo_asst3_part1_files/gene_expression.tsv",
               destfile = "gene_expression.tsv")
@@ -22,8 +20,7 @@ head(gene)
 str(gene)
 ```
 
-##Question2: 
-make a new column which is the mean of the other columns. Show a table of values for the first six genes
+##Question2: make a new column which is the mean of the other columns. Show a table of values for the first six genes
 ```{r,chunk1}
 gene$mean <- rowMeans(gene)
 head(gene)
@@ -34,8 +31,7 @@ and then using the head command to check if the gene has been imported properly
 by showing a table of values for the first six genes and also checking the data structure
 
 
-##Question3: 
-List the 10 genes with the highest mean expression
+##Question3: List the 10 genes with the highest mean expression
 ```{r,chunk2}
 head(gene[order(-gene$mean), ], 10)
 ```
@@ -43,8 +39,7 @@ In question 3, i use the order command and square brackets to reorder the gene f
 and providing their mean and then using the head command to check 
 and list genes with the highest mean expression
 
-##Question4: 
-Determine the number of genes with a mean <10
+##Question4: Determine the number of genes with a mean <10
 ```{r,chunk3}
 filtered <- subset(gene, mean < 10)
 nrow(filtered)
@@ -52,9 +47,24 @@ nrow(filtered)
 in question 4, i use the subset command to determine the genes with a mean <10
 and then filtered to get the total number of genes with a mean <10
 
-##Question5: 
-Make a histogram plot of the mean values in png format and paste it into your report
+##Question5: Make a histogram plot of the mean values in png format and paste it into your report
 ```{r,plot1}
 hist(gene$mean)
 ```
 I created a histogram showing the frequency against the gene$mean
+
+##Question6: Import this csv file into an R object. What are the column names?
+```{r,download}
+download.file("https://raw.githubusercontent.com/markziemann/SLE712_files/master/bioinfo_asst3_part1_files/growth_data.csv",
+              destfile = "growth_data.csv")
+```
+Using the download.file command to import files from GitHub 
+And then i read in R using the `read.csv()`to obtain the dataset and also making sure the header are recongnized and seting the `stringsAsFcators = FALSE`and then proceed into using the head command to check if the gene has been imported properly, by showing a table of values for the first six genes and also checking the data structure, then finally use the `colnames` command to list the column names
+```{r,import_read}
+tree <- read.csv("growth_data.csv", header = TRUE, stringsAsFactors = FALSE)
+head(tree)
+str(tree)
+colnames(tree)
+```
+
+##Question7: Calculate the mean and standard deviation of tree circumference at the start and end of the study at both sites.

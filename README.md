@@ -12,7 +12,7 @@ and also to test the limit of blast for part 2 of the assessment
 
 ## Contents
 * Readme file in markdown
-* Assessment Rscript / Rmd
+* Assessment Rmd
 
 ## Installation 
 Rstudio Version 1.2.1335 and R version 3.6.3
