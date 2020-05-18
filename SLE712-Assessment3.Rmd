@@ -1,45 +1,60 @@
-#question1: Read in the file, making the gene accession numbers the row names. 
-#Show a table of values for the first six genes.
+---
+title: "SLE712 assessment part 1"
+author: "Kinhgsley Isaac Ogamanya"
+date: "18/05/2020"
+output: html_document
+theme: cosmo
+---
+
+##Question1: 
+Read in the file, making the gene accession numbers the row names. 
+Show a table of values for the first six genes.
+```{r,download}
 download.file("https://raw.githubusercontent.com/markziemann/SLE712_files/master/bioinfo_asst3_part1_files/gene_expression.tsv",
               destfile = "gene_expression.tsv")
-
-# i use the download.file command to import files from GitHub 
-# And then read in R making sure the first columns is set as the row names and headers are recongnized 
-# so as to show a table of values for the first six genes 
+```
+I use the download.file command to import files from GitHub 
+And then i read in R making sure the first columns is set as the row names and headers are recongnized 
+so as to show a table of values for the first six genes, and then proceed into using the head command to check if the gene has been imported properly, by showing a table of values for the first six genes and also checking the data structure.
+```{r,import_read}
 gene <- read.table("gene_expression.tsv",header = TRUE , stringsAsFactors = FALSE , row.names = 1)
-# using the head command to check if the gene has been imported properly 
-# by showing a table of values for the first six genes
 head(gene)
-# to check data structure 
 str(gene)
+```
 
-
-#question2: make a new column which is the mean of the other columns. Show a table of values for the first six genes
-#Using the rowMeans command to create the mean of the new columns 
+##Question2: 
+make a new column which is the mean of the other columns. Show a table of values for the first six genes
+```{r,chunk1}
 gene$mean <- rowMeans(gene)
-# using the head command to check if the gene has been imported properly 
-# by showing a table of values for the first six genes
 head(gene)
-# to check data structure 
 str(gene)
+```
+In this question2, i use the rowMeans command to create the mean of the new columns 
+and then using the head command to check if the gene has been imported properly 
+by showing a table of values for the first six genes and also checking the data structure
 
 
-#question3: List the 10 genes with the highest mean expression
-#using the order command and square brackets to reorder the gene files and providing their mean
-order(gene$mean)
-gene[order(gene$mean), ]
-gene[order(-gene$mean), ]
-#using the head command to check and list genes with the highest mean expression
-head(gene[order(-gene$mean), ])
+##Question3: 
+List the 10 genes with the highest mean expression
+```{r,chunk2}
 head(gene[order(-gene$mean), ], 10)
+```
+In question 3, i use the order command and square brackets to reorder the gene files 
+and providing their mean and then using the head command to check 
+and list genes with the highest mean expression
 
-#question4: Determine the number of genes with a mean <10
-#using the subset command to determine the genes with a mean <10
-subset(gene, mean < 10)
-#filtered to get the total number of genes with a mean <10
+##Question4: 
+Determine the number of genes with a mean <10
+```{r,chunk3}
 filtered <- subset(gene, mean < 10)
 nrow(filtered)
+```
+in question 4, i use the subset command to determine the genes with a mean <10
+and then filtered to get the total number of genes with a mean <10
 
-#question5: Make a histogram plot of the mean values in png format and paste it into your report
-#creating a histogram showing the frequency against the gene$mean
+##Question5: 
+Make a histogram plot of the mean values in png format and paste it into your report
+```{r,plot1}
 hist(gene$mean)
+```
+I created a histogram showing the frequency against the gene$mean
