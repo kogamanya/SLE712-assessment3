@@ -54,13 +54,13 @@ hist(gene$mean)
 I created a histogram showing the frequency against the gene$mean
 
 ##Question6: Import this csv file into an R object. What are the column names?
-```{r,download}
+```{r,chunk4}
 download.file("https://raw.githubusercontent.com/markziemann/SLE712_files/master/bioinfo_asst3_part1_files/growth_data.csv",
               destfile = "growth_data.csv")
 ```
 Using the download.file command to import files from GitHub 
 And then i read in R using the `read.csv()`to obtain the dataset and also making sure the header are recongnized and seting the `stringsAsFcators = FALSE`and then proceed into using the head command to check if the gene has been imported properly, by showing a table of values for the first six genes and also checking the data structure, then finally use the `colnames` command to list the column names
-```{r,import_read}
+```{r,chunk5}
 tree <- read.csv("growth_data.csv", header = TRUE, stringsAsFactors = FALSE)
 head(tree)
 str(tree)
@@ -68,3 +68,32 @@ colnames(tree)
 ```
 
 ##Question7: Calculate the mean and standard deviation of tree circumference at the start and end of the study at both sites.
+```{r,chunk6,echo=TRUE}
+ne <- subset(tree,Site=="northeast")
+head(ne)
+tail(ne)
+str(ne)
+mean(ne$Circumf_2004_cm)
+mean(ne$Circumf_2019_cm)
+sd(ne$Circumf_2004_cm)
+sd(ne$Circumf_2019_cm)
+
+#repeat same procedure for the southwest 
+sw <- subset(tree,Site=="southwest")
+head(sw)
+tail(sw)
+str(sw)
+mean(sw$Circumf_2004_cm)
+mean(sw$Circumf_2019_cm)
+sd(sw$Circumf_2004_cm)
+sd(sw$Circumf_2019_cm)
+```
+In question 7, I first created two objects which are data frame for northeast and southwest, and then using the subset command to subset the tree growth obejcts so as to get the data that corresponds to both the northeast and southwest and then using the head and tail command to properly import and obtain the first and last 6 of the tree growths for both sites, making sure the structures are checked, and then proceed to calculate and obtain the mean and standard deviation of tree circumference at the start and end of the study for both sites using the mean and sd command
+
+##Question8: make a boxplot of tree circumference at the start and end of the study at both sites
+```{r,plot2}
+boxplot(ne$Circumf_2004_cm,ne$Circumf_2019_cm,sw$Circumf_2004_cm,sw$Circumf_2019_cm,
+        names =c("ne2004","ne2019","sw2004","sw2019"),ylab="Circumference (cm)" ,
+        main="Tree growth at both plantation sites")
+```
+In question 8, i use the boxplot command to plot a chart showing the tree circumference at the start and end of the study for both sites
