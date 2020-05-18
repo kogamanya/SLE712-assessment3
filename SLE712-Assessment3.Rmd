@@ -97,3 +97,24 @@ boxplot(ne$Circumf_2004_cm,ne$Circumf_2019_cm,sw$Circumf_2004_cm,sw$Circumf_2019
         main="Tree growth at both plantation sites")
 ```
 In question 8, i use the boxplot command to plot a chart showing the tree circumference at the start and end of the study for both sites
+
+##Question9: Calculate the mean growth over the past 10 years at each site
+```{r,chunk7,echo=TRUE}
+ne$growth <-ne$Circumf_2019_cm-ne$Circumf_2009_cm
+head(ne)
+mean(ne$growth)
+
+#repeat same procedure for the southwest
+sw$growth <-sw$Circumf_2019_cm-sw$Circumf_2009_cm
+head(sw)
+mean(sw$growth)
+```
+Using the downloaded subset, i substract the past year which is 2009 from the recent year which is 2019 and using the head command to check if imported properly, and then using the mean command to calculate the mean growth over the past 10 years, repeated the steps for both sites.
+
+##Question 10: use the t.test and wilcox.test functions to estimate the p-value and show that the 10 year growth is different at the two sites.
+```{r,chunk8}
+t.test(sw$growth,ne$growth)
+wilcox.test(sw$growth,ne$growth)
+```
+i use the `t.test` and `wilcox.test` command to determine the difference between the two sites
+
