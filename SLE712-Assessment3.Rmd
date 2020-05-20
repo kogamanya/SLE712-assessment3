@@ -6,7 +6,8 @@ output: html_document
 theme: cosmo
 ---
 
-#PART 1
+#PART 1: Analyse the tsv and csv files
+
 ##Question1: Read in the file, making the gene accession numbers the row names. Show a table of values for the first six genes.
 ```{r,download}
 download.file("https://raw.githubusercontent.com/markziemann/SLE712_files/master/bioinfo_asst3_part1_files/gene_expression.tsv",
@@ -120,6 +121,7 @@ wilcox.test(sw$growth,ne$growth)
 i use the `t.test` and `wilcox.test` command to determine the difference between the two sites
 
 #PART 2: Determine the limits of BLAST
+
 To start with this part 2 section, i first of all, loaded all the library packages that are required in order to get all the codes working fine.
 ```{r,libs}
 library("seqinr")
@@ -151,3 +153,15 @@ length(myseq)
 Using the `download.file` command to download the sample fasta sequences and i load it into R in an object called s, and then select out my sequence from the batch of all the sample fasta sequences and checking the structures before proceeding to use the `seqinr` package to determine the length (in bp) and the proportion of GC bases.
 
 ##Question 3: You will be provided with R functions to create BLAST databases and perform blast searches, Use blast to identify what E. coli gene your sequence matches best. Show a table of the top 3 hits including percent identity, E-value and bit scores.
+```{r,blast1}
+download.file("https://raw.githubusercontent.com/markziemann/SLE712_files/master/bioinfo_asst3_part2_files/mutblast_functions.R",
+              destfile = "mutblast.R")
+source("mutblast.R")
+myblastn_tab
+res <- myblastn_tab(myseq = myseq, db = "Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.cds.all.fa")
+str(res)
+res
+```
+I use the `download.file` command to download the mutblast R Fuctions from Github and then i source the file so as to save the funtions in my environment and then to test the functions and also to generate an object called `res`, then i blast with the query as my allocated sequence, making sure the structures is check so as to generate a table with the `res` object initially generated. In the table we can find the top 3 hits including percent identity, E-value and bit scores. The discovered gene is AAC75752 and it is an anaerobic nitric oxide reductase flavorubredoxin and the gene name is norV b2710.
+
+##Question 4: You will be provided with a function that enables you to make a set number of point mutations to your sequence of interest. Run the function and write an R code to check the number of mismatches between the original and mutated sequence.
