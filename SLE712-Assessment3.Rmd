@@ -53,7 +53,7 @@ and then filtered to get the total number of genes with a mean <10
 ```{r,plot1}
 hist(gene$mean)
 ```
-I created a histogram showing the frequency against the gene$mean
+I created a histogram showing the frequency against the gene$mean at the x-axis
 
 ##Question6: Import this csv file into an R object. What are the column names?
 ```{r,chunk4}
@@ -162,6 +162,14 @@ res <- myblastn_tab(myseq = myseq, db = "Escherichia_coli_str_k_12_substr_mg1655
 str(res)
 res
 ```
-I use the `download.file` command to download the mutblast R Fuctions from Github and then i source the file so as to save the funtions in my environment and then to test the functions and also to generate an object called `res`, then i blast with the query as my allocated sequence, making sure the structures is check so as to generate a table with the `res` object initially generated. In the table we can find the top 3 hits including percent identity, E-value and bit scores. The discovered gene is AAC75752 and it is an anaerobic nitric oxide reductase flavorubredoxin and the gene name is norV b2710.
+I use the `download.file` command to download the mutblast R Fuctions from Github and then i source the file so as to save the funtions in my environment and then to test the functions and also to generate an object called `res`, then i blast with the query as my allocated sequence, making sure the structures is check so as to generate a table with the `res` object initially generated. In the table we can find the top 3 hits including percent identity = 100, E-value = 0 and bit scores = 2769. The discovered gene is AAC75752 and it is an anaerobic nitric oxide reductase flavorubredoxin and the gene name is norV b2710.
 
 ##Question 4: You will be provided with a function that enables you to make a set number of point mutations to your sequence of interest. Run the function and write an R code to check the number of mismatches between the original and mutated sequence.
+```{r,mutator1}
+myseqmutator <-mutator(myseq, 28)
+res <- myblastn_tab(myseq = myseqmutator, db = "Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.cds.all.fa")
+res
+```
+using the mutator to mutate the original sequence and then using the blast command to import and compare the changes in the mismatches of which from the original sequence the mismatch was 0 and when the original sequence was mutated the mismatch turns to 19 and there is a noticeable change in the bitscore and p.identity.
+
+##Question 5:Using the provided functions for mutating and BLASTing a sequence, determine the number and proportion of sites that need to be altered to prevent the BLAST search from matching the gene of origin. Because the mutation is random, you may need to run this test multiple times to get a reliable answer.
