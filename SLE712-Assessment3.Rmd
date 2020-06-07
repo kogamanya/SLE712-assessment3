@@ -6,7 +6,7 @@ output: html_document
 theme: cosmo
 ---
 
-#PART 1: Analyse the tsv and csv files
+# PART 1: Analyse the tsv and csv files
 
 ##Question1: Read in the file, making the gene accession numbers the row names. Show a table of values for the first six genes.
 ```{r,download}
@@ -120,7 +120,7 @@ wilcox.test(sw$growth,ne$growth)
 ```
 i use the `t.test` and `wilcox.test` command to determine the difference between the two sites
 
-#PART 2: Determine the limits of BLAST
+# PART 2: Determine the limits of BLAST
 
 To start with this part 2 section, i first of all, loaded all the library packages that are required in order to get all the codes working fine.
 ```{r,libs}
@@ -170,6 +170,26 @@ myseqmutator <-mutator(myseq, 28)
 res <- myblastn_tab(myseq = myseqmutator, db = "Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.cds.all.fa")
 res
 ```
-using the mutator to mutate the original sequence and then using the blast command to import and compare the changes in the mismatches of which from the original sequence the mismatch was 0 and when the original sequence was mutated the mismatch turns to 19 and there is a noticeable change in the bitscore and p.identity.
+using the `mutator` to mutate the original sequence and then using the `Blastn` command to import and compare the changes in the mismatches of which from the original sequence the mismatch was 0 and when the original sequence was mutated the mismatch turns to 19 and there is a noticeable change in the bitscore and p.identity.
 
-##Question 5:Using the provided functions for mutating and BLASTing a sequence, determine the number and proportion of sites that need to be altered to prevent the BLAST search from matching the gene of origin. Because the mutation is random, you may need to run this test multiple times to get a reliable answer.
+##Question 5: Using the provided functions for mutating and BLASTing a sequence, determine the number and proportion of sites that need to be altered to prevent the BLAST search from matching the gene of origin. Because the mutation is random, you may need to run this test multiple times to get a reliable answer.
+```{r,blast}
+myfunc <- function(myseq,nmut) { 
+  mutseq <- mutator( myseq= myseq, nmut = nmut) 
+  res <- myblastn_tab(myseq= myseq,db= "Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.cds.all.fa") 
+  if (is.null(res)) {myres= 0} else {myres = 1} 
+  return(myres)
+}
+myfunc(myseq,100)
+replicate(n = 100, myfunc(myseq,100))
+mean(replicate(100,myfunc(myseq,100)))
+n <-c(0,100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400)
+myfunction_rep <- function(nmut) {
+  mean(replicate(n=100, myfunc(myseq,100)))
+}
+finalres <- sapply( n, myfunc_rep )
+finalres
+```
+first I created a fucntion `myfunc` that can mutate + blast and then summarise the result as a 0 or 1 by testing the new function `myfunc`, towards being sure that the blast was successful and then I use the `replicate` command to repeat the routine a 100 times by making sure that I am getting an accurate result which gave me a vector of 100 values (1s). Towards answering the question which is "Addressing the limit of Blastn", I tested some larger numbers almost to the length of my sequence with a new function `myfunction_rep` and then concluded with the sapply command which shows a few bunch of (1s).
+
+## 6: Provide a chart or table that shows how the increasing proportion of mutated bases reduces the ability for BLAST to match the gene of origin. Summarize the results in 1 to 2 sentences.
