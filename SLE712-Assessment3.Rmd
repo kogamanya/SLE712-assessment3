@@ -1,7 +1,7 @@
 ---
 title: "SLE712 assessment part 1 and part 2"
 author: "Kinhgsley Isaac Ogamanya"
-date: "18/05/2020"
+date: "12/06/2020"
 output: html_document
 theme: cosmo
 ---
@@ -176,20 +176,27 @@ using the `mutator` to mutate the original sequence and then using the `Blastn` 
 ```{r,blast}
 myfunc <- function(myseq,nmut) { 
   mutseq <- mutator( myseq= myseq, nmut = nmut) 
-  res <- myblastn_tab(myseq= myseq,db= "Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.cds.all.fa") 
+  res <- myblastn_tab(myseq= mutseq,db= "Escherichia_coli_str_k_12_substr_mg1655.ASM584v2.cds.all.fa") 
   if (is.null(res)) {myres= 0} else {myres = 1} 
   return(myres)
 }
-myfunc(myseq,100)
+myfunc(myseq = myseq,nmut = 1440)
 replicate(n = 100, myfunc(myseq,100))
 mean(replicate(100,myfunc(myseq,100)))
-n <-c(0,100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400)
+n <-c(0,100,200,300,400,500,600,700)
 myfunction_rep <- function(nmut) {
-  mean(replicate(n=100, myfunc(myseq,100)))
+  mean(replicate(100, myfunc(myseq= myseq, nmut)))
 }
-finalres <- sapply( n, myfunc_rep )
+myfunc(myseq = myseq,nmut = 1440)
+finalres <- sapply( n, myfunction_rep )
 finalres
 ```
-first I created a fucntion `myfunc` that can mutate + blast and then summarise the result as a 0 or 1 by testing the new function `myfunc`, towards being sure that the blast was successful and then I use the `replicate` command to repeat the routine a 100 times by making sure that I am getting an accurate result which gave me a vector of 100 values (1s). Towards answering the question which is "Addressing the limit of Blastn", I tested some larger numbers almost to the length of my sequence with a new function `myfunction_rep` and then concluded with the sapply command which shows a few bunch of (1s).
+first I created a fucntion `myfunc` that can mutate + blast and then summarise the result as a 0 or 1 by testing the new function `myfunc` towards being sure that the blast was successful and then I use the `replicate` command to repeat the routine a 100 times by making sure that I am getting an accurate result which gave me a vector of 100 values (1s). Towards answering the question which is "Addressing the limit of Blastn", I tested some larger numbers almost to 40% of the length for my sequence with a new function `myfunction_rep` and then concluded with the sapply command which shows a few bunch of numericals ranging from 0.0 to 1.0
 
 ## 6: Provide a chart or table that shows how the increasing proportion of mutated bases reduces the ability for BLAST to match the gene of origin. Summarize the results in 1 to 2 sentences.
+```{r,plot3}
+proportions <-c(1.00, 1.00, 1.00, 0.84, 0.38, 0.04, 0.02, 0.00)
+nmut_value <-c(0,100,200,300,400,500,600,700)
+plot(nmut_value, proportions, main="How increasing number of random bases affect BLAST performance")
+```
+using the plot command to show how increasing number of random bases affects BLAST performance.
