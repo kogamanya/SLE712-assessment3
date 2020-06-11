@@ -1,10 +1,13 @@
 ---
 title: "SLE712 assessment part 1 and part 2"
-author: "Kinhgsley Isaac Ogamanya"
+author: "Kingsley Isaac Ogamanya"
+student id: "219548242"
 date: "12/06/2020"
+unit: "SLE712 - Bioinformatics and Molecular Biology Techniques" 
 output: html_document
 theme: cosmo
 ---
+https://github.com/kogamanya/SLE712-assessment3.git
 
 # PART 1: Analyse the tsv and csv files
 
@@ -193,7 +196,7 @@ finalres
 ```
 first I created a fucntion `myfunc` that can mutate + blast and then summarise the result as a 0 or 1 by testing the new function `myfunc` towards being sure that the blast was successful and then I use the `replicate` command to repeat the routine a 100 times by making sure that I am getting an accurate result which gave me a vector of 100 values (1s). Towards answering the question which is "Addressing the limit of Blastn", I tested some larger numbers almost to 40% of the length for my sequence with a new function `myfunction_rep` and then concluded with the sapply command which shows a few bunch of numericals ranging from 0.0 to 1.0
 
-## 6: Provide a chart or table that shows how the increasing proportion of mutated bases reduces the ability for BLAST to match the gene of origin. Summarize the results in 1 to 2 sentences.
+## Question 6: Provide a chart or table that shows how the increasing proportion of mutated bases reduces the ability for BLAST to match the gene of origin. Summarize the results in 1 to 2 sentences.
 ```{r,plot3}
 proportions <-c(1.00, 1.00, 1.00, 0.84, 0.38, 0.04, 0.02, 0.00)
 nmut_value <-c(0,100,200,300,400,500,600,700)
